@@ -592,14 +592,15 @@
   <!-- ─── Hero ───────────────────────────────────────────────── -->
   <section class="hero" id="home" aria-label="Introduction">
     <div class="hero-left">
-      <p class="hero-eyebrow">Software Ventures</p>
+      <p class="hero-eyebrow">Product · AI · Software</p>
       <h1 class="hero-headline">
-        Building software for the<br>
-        <em>problems that matter.</em>
+        15 years of product.<br>
+        <em>The velocity of AI.</em>
       </h1>
       <p class="hero-sub">
-        From health to work, we design and build tools that give people
-        better access to their own data — and more efficient ways to use it.
+        From tech startups to Amazon — designing features, improving processes,
+        and owning the customer lifecycle from first sale through renewal.
+        Now deploying AI to compress time to market and build products that scale.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">
@@ -634,16 +635,18 @@
     <div class="about-grid">
       <div>
         <p class="section-label">About</p>
-        <h2 class="section-title" id="about-title">Software designed around the people who use it.</h2>
+        <h2 class="section-title" id="about-title">Product experience applied at the speed of AI.</h2>
         <p class="section-body">
-          Olympus Hills Ventures is a software company built to create solutions for everyday problems.
-          From personal health to professional productivity, we find better ways for people to have access
-          to their own data and to be more efficient in how they use it.
+          Olympus Hills Ventures is founded on 15+ years of hands-on product work — across early-stage
+          startups and organizations like Amazon — designing features, building processes, and understanding
+          what it actually takes to move a customer from first contact through long-term retention.
         </p>
         <br>
         <p class="section-body">
-          We believe the best software disappears into the background — quietly doing the work so people
-          can focus on what actually matters to them.
+          The thesis: most organizations struggle not because they lack ideas, but because they lack
+          a clear roadmap, a disciplined prioritization process, and the ability to ship fast enough
+          to learn. AI changes that last part. Used deliberately, it compresses time to market —
+          enabling smaller teams to build and iterate at a scale that used to require much larger ones.
         </p>
       </div>
 
@@ -656,8 +659,8 @@
             </svg>
           </div>
           <div class="pillar-text">
-            <h4>Everyday problems</h4>
-            <p>We focus on friction people experience every day — in health, habits, work, and decisions.</p>
+            <h4>Customer lifecycle, end to end</h4>
+            <p>Sales through renewal — understanding what drives acquisition, retention, and expansion informs every product decision.</p>
           </div>
         </div>
         <div class="pillar">
@@ -669,8 +672,8 @@
             </svg>
           </div>
           <div class="pillar-text">
-            <h4>Data that belongs to you</h4>
-            <p>People should understand and own their own information. We build surfaces that make that real.</p>
+            <h4>Roadmap discipline</h4>
+            <p>Clear prioritization, maintained through ambiguity. A roadmap is only useful if the team trusts it and leadership can explain it.</p>
           </div>
         </div>
         <div class="pillar">
@@ -680,8 +683,8 @@
             </svg>
           </div>
           <div class="pillar-text">
-            <h4>Built to last</h4>
-            <p>Every product we ship is meant to be used, maintained, and improved — not abandoned.</p>
+            <h4>AI-native execution</h4>
+            <p>AI isn't the product — it's how the product gets built faster. Deliberately deployed to reduce time to market and help smaller teams punch above their weight.</p>
           </div>
         </div>
       </div>
@@ -693,7 +696,8 @@
     <p class="section-label">Current Projects</p>
     <h2 class="section-title" id="projects-title">What we're building.</h2>
     <p class="section-body">
-      Software we're actively developing and shipping — each one tackling a specific problem space.
+      Products developed using the same principles — clear problem definition, disciplined roadmapping,
+      and AI-accelerated execution.
     </p>
 
     <div class="projects-grid">
@@ -723,8 +727,8 @@
         <p class="section-label">Contact</p>
         <h2 class="section-title" id="contact-title">Let's talk.</h2>
         <p class="section-body">
-          Have a question, a problem to solve, or want to explore a potential collaboration?
-          We'd like to hear from you.
+          If you're working through a product challenge — scaling a team, building a roadmap,
+          or figuring out where AI fits — reach out. That's the work.
         </p>
         <br>
         <div class="contact-detail">
@@ -809,6 +813,21 @@
     const form = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
 
+    function showSuccess() {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }
+
+    function mailtoFallback(data) {
+      const name    = data.get('name') || '';
+      const email   = data.get('email') || '';
+      const subject = encodeURIComponent(data.get('subject') || 'Message from olympushillsventures.com');
+      const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${data.get('message') || ''}`);
+      // Open in background — page stays put
+      window.open(`mailto:marcus@olympushillsventures.com?subject=${subject}&body=${body}`, '_self');
+      showSuccess();
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
@@ -819,23 +838,12 @@
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          form.style.display = 'none';
-          success.style.display = 'block';
+          showSuccess();
         } else {
-          // Fallback: open mailto directly
-          const name    = data.get('name') || '';
-          const email   = data.get('email') || '';
-          const subject = encodeURIComponent(data.get('subject') || 'Message from olympushillsventures.com');
-          const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${data.get('message') || ''}`);
-          window.location.href = `mailto:marcus@olympushillsventures.com?subject=${subject}&body=${body}`;
+          mailtoFallback(data);
         }
       } catch {
-        // Network error fallback: mailto
-        const name    = data.get('name') || '';
-        const email   = data.get('email') || '';
-        const subject = encodeURIComponent(data.get('subject') || 'Message from olympushillsventures.com');
-        const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${data.get('message') || ''}`);
-        window.location.href = `mailto:marcus@olympushillsventures.com?subject=${subject}&body=${body}`;
+        mailtoFallback(data);
       }
     });
 
