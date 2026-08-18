@@ -496,16 +496,64 @@
       line-height: 1.5;
     }
 
-    .form-success {
+    .form-success { display: none; }
+
+    /* Modal */
+    .modal-overlay {
       display: none;
-      padding: 16px;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 15px;
-      color: var(--text-mid);
-      text-align: center;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
     }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 36px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: var(--accent);
+    }
+    .modal-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .modal-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .modal-close {
+      padding: 10px 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: var(--accent-hover); }
 
     /* ─── Footer ─────────────────────────────────────────────── */
     footer {
@@ -598,8 +646,8 @@
         <em>paired with the velocity of AI.</em>
       </h1>
       <p class="hero-sub">
-        From tech startups to Amazon — designing features, improving processes,
-        and owning the customer lifecycle from first sale through renewal.
+        15+ years working in product, from early-stage startups through Amazon scale,
+        designing features and owning the full customer journey from first sale to renewal.
         Now deploying AI to compress time to market and build products that scale.
       </p>
       <div class="hero-actions">
@@ -626,7 +674,6 @@
         <path d="M600 580 Q460 500 340 560 Q220 620 100 500 Q50 460 0 440" stroke="currentColor" stroke-width="0.8" opacity="0.18"/>
         <path d="M600 640 Q440 580 320 640 Q200 700 80 580 Q40 540 0 500" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>
       </svg>
-      <span class="ghost-omega" aria-hidden="true">Ω</span>
     </div>
   </section>
 
@@ -635,20 +682,20 @@
     <div class="about-grid">
       <div>
         <p class="section-label">About</p>
-        <h2 class="section-title" id="about-title">Customers suffer in silence. That's the problem worth solving.</h2>
+        <h2 class="section-title" id="about-title">People suffer in silence. That's the problem worth solving.</h2>
         <p class="section-body">
-          Most users don't file tickets. They build workarounds. They quietly stop using features
+          Most people don't file tickets. They build workarounds. They quietly stop using features
           that don't work for them, and they rarely tell anyone why. If those pain points aren't
-          surfaced, understood, and communicated clearly — product can't build solutions that actually fix them.
-          Understanding that end-to-end customer journey, from first contact through renewal,
+          surfaced, understood, and communicated clearly, product can't build solutions that actually fix them.
+          Understanding that end-to-end journey, from first contact through renewal,
           is the work I've spent 15+ years doing.
         </p>
         <br>
         <p class="section-body">
-          Olympus Hills Ventures applies that experience — across tech startups and organizations like Amazon —
-          combined with a deliberate use of AI to compress time to market. The result: smaller teams
-          that ship faster, clearer roadmaps that teams can actually trust, and products built around
-          problems that are real.
+          Olympus Hills Ventures applies that experience, built through product roles working at
+          early-stage startups through Amazon scale, combined with a deliberate use of AI to
+          compress time to market. The result: smaller teams that ship faster, clearer roadmaps
+          that teams can actually trust, and products built around problems that are real.
         </p>
         <p class="section-body" style="margin-top:16px;font-size:14px;color:var(--text-muted)">
           Founded by Marcus.
@@ -664,8 +711,8 @@
             </svg>
           </div>
           <div class="pillar-text">
-            <h4>Customer lifecycle, end to end</h4>
-            <p>Sales through renewal — understanding what drives acquisition, retention, and expansion informs every product decision.</p>
+            <h4>People over personas</h4>
+            <p>People rarely voice their frustrations directly. They build workarounds and quietly disengage. Finding where that happens, understanding the real pain behind it, and designing solutions that actually address it is the work.</p>
           </div>
         </div>
         <div class="pillar">
@@ -689,7 +736,7 @@
           </div>
           <div class="pillar-text">
             <h4>AI-native execution</h4>
-            <p>AI isn't the product — it's how the product gets built faster. Deliberately deployed to reduce time to market and help smaller teams punch above their weight.</p>
+            <p>AI isn't the product. It's how the product gets built faster. Deliberately deployed to reduce time to market and help smaller teams punch above their weight.</p>
           </div>
         </div>
       </div>
@@ -746,19 +793,7 @@
       </div>
 
       <div>
-        <!--
-          To enable email sending, create a free account at https://formspree.io
-          and replace YOUR_FORM_ID below with your actual form endpoint ID.
-          Example: action="https://formspree.io/f/xabc1234"
-        -->
-        <form
-          id="contact-form"
-          action="https://formspree.io/f/YOUR_FORM_ID"
-          method="POST"
-          novalidate
-        >
-          <input type="hidden" name="_replyto" value="marcus@olympushillsventures.com" />
-          <input type="hidden" name="_subject" value="New message from olympushillsventures.com" />
+        <form id="contact-form" novalidate>
 
           <div class="field-row">
             <label>
@@ -791,12 +826,24 @@
           <p class="form-note">We typically respond within one business day.</p>
         </form>
 
-        <div class="form-success" id="form-success" role="alert">
-          Message sent — we'll be in touch soon.
-        </div>
+        <div class="form-success" id="form-success"></div>
       </div>
     </div>
   </section>
+
+  <!-- ─── Success Modal ─────────────────────────────────────── -->
+  <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M4 11l5 5 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 id="modal-title">Message sent.</h3>
+      <p>Thanks for reaching out. I'll get back to you within one business day.</p>
+      <button class="modal-close" id="modal-close">Done</button>
+    </div>
+  </div>
 
   <!-- ─── Footer ────────────────────────────────────────────── -->
   <footer role="contentinfo">
@@ -814,43 +861,31 @@
     // Current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Formspree AJAX submission
-    const form = document.getElementById('contact-form');
-    const success = document.getElementById('form-success');
+    const form  = document.getElementById('contact-form');
+    const modal = document.getElementById('success-modal');
+    const modalClose = document.getElementById('modal-close');
 
-    function showSuccess() {
-      form.style.display = 'none';
-      success.style.display = 'block';
-    }
-
-    function mailtoFallback(data) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data    = new FormData(form);
       const name    = data.get('name') || '';
       const email   = data.get('email') || '';
       const subject = encodeURIComponent(data.get('subject') || 'Message from olympushillsventures.com');
-      const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${data.get('message') || ''}`);
-      // Open in background — page stays put
-      window.open(`mailto:marcus@olympushillsventures.com?subject=${subject}&body=${body}`, '_self');
-      showSuccess();
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          showSuccess();
-        } else {
-          mailtoFallback(data);
-        }
-      } catch {
-        mailtoFallback(data);
-      }
+      const body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + (data.get('message') || ''));
+      // Open mail client without navigating away
+      const link = document.createElement('a');
+      link.href = 'mailto:marcus@olympushillsventures.com?subject=' + subject + '&body=' + body;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      // Show modal, reset form
+      modal.classList.add('active');
+      form.reset();
     });
+
+    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
     // Dropdown keyboard accessibility
     document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
